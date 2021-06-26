@@ -1,0 +1,22 @@
+name: 'Package Release Cleaner'
+description: 'Cleans previous releases to Github Packages containing a specific pattern.'
+inputs:
+  userOrg:
+    description: "The Github user or organization that owns the package in question"
+    required: true
+  package:
+    description: 'The name of the package for which to clean releases'
+    required: true
+  token:
+    description: 'The authorization token to use to access Github Packages for the specified package. Must have access to delete:packages for the specified package owned by the organization or user specified.'
+    required: true
+  pattern:
+      description: 'The pattern to search for'
+      required: true
+      default: 'dev'
+outputs:
+  numDeleted:
+    description: 'The number of package versions that were deleted'
+runs:
+  using: 'node12'
+  main: 'index.js'
