@@ -33,10 +33,11 @@ new Promise((resolve, reject) => {
           }
         });
 
-        return delete_packages(result_packages, org, package_name);
+        return delete_packages(result_packages, org, package_name, auth_token);
       });
 })
 .then((packages_deleted) => {
+  console.log(`Deleted ${packages_deleted} package versions`);
   core.setOutput("num_deleted", packages_deleted);
 })
 .catch((error) => {
@@ -49,7 +50,8 @@ function delete_packages(result_packages, org, package_name, auth_token) {
   return new Promise((resolve, reject) => {
     _.forEach(result_packages, (package_entry) => {
       send_request(`/orgs/${org}/packages/npm/${package_name}/versions/${package_entry.id}`, 'DELETE', null, auth_token)
-        .then(() => {
+        .then((response) => {
+          console.log(`Status of request: ${response.statusCode}`);
           total_packages_deleted++;
 
           if (total_packages_deleted === num_packages) {
@@ -57,7 +59,7 @@ function delete_packages(result_packages, org, package_name, auth_token) {
           }
         })
         .catch((error) => {
-          throw error;
+          reject(error);
         });
     });
   });
@@ -69,7 +71,7 @@ function send_request(path, method, body, auth_token) {
   const accept_header = "application/vnd.github.v3+json";
 
   const url = new URL(path, base_url);
-  console.log(`Making request to: ${url}`);
+  console.log(`Making ${method} request to: ${url}`);
   return fetch(url, {
     headers: {
       'Accept': accept_header,
@@ -80,6 +82,15 @@ function send_request(path, method, body, auth_token) {
   })
     .then((response) => {
       return new Promise((resolve, reject) => {
+        if (response.status === 204 || response.body === null) {
+          resolve({
+            statusCode: response.status,
+            body: null
+          });
+
+          return;
+        }
+
         response.json()
           .then((resulting_json) => {
             resolve({
