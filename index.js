@@ -7,10 +7,6 @@ const github = require('@actions/github');
 // Pull data from github
 const base_url = "https://api.github.com";
 const accept_header = "application/vnd.github.v3+json";
-// const org = 'foamfactory';
-// const auth_token = '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';
-// const package_name = 'aegir';
-// const pattern = 'rc';
 
 new Promise((resolve, reject) => {
     let org = core.getInput('org');
