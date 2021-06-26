@@ -1,0 +1,22 @@
+[[tags]]
+footers = []
+name = "default"
+tag = "default"
+
+[[tags]]
+footers = []
+name = "Miscellaneous"
+tag = "tada"
+
+[[tags]]
+footers = []
+name = "Features"
+tag = "sparkles"
+
+[footer]
+once = false
+text = ""
+
+[header]
+once = false
+text = ""

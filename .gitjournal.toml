@@ -1,0 +1,10 @@
+categories = ["Fix", "Remove", "Initial", "Added"]
+category_delimiters = ["", ""]
+colored_output = true
+enable_debug = true
+enable_footers = false
+excluded_commit_tags = []
+show_commit_hash = true
+show_prefix = false
+sort_by = "name"
+template_prefix = ""
