@@ -4,10 +4,6 @@ const fetch = require('node-fetch');
 const core = require('@actions/core');
 const github = require('@actions/github');
 
-// Pull data from github
-const base_url = "https://api.github.com";
-const accept_header = "application/vnd.github.v3+json";
-
 new Promise((resolve, reject) => {
     let org = core.getInput('org');
     let auth_token = core.getInput('token');
@@ -68,7 +64,12 @@ function delete_packages(result_packages, org, package_name, auth_token) {
 }
 
 function send_request(path, method, body, auth_token) {
+  // Pull data from github
+  const base_url = "https://api.github.com";
+  const accept_header = "application/vnd.github.v3+json";
+
   const url = new URL(path, base_url);
+  console.log(`Making request to: ${url}`);
   return fetch(url, {
     headers: {
       'Accept': accept_header,
