@@ -5,7 +5,7 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 
 new Promise((resolve, reject) => {
-    let org = core.getInput('org');
+    let org = core.getInput('userOrg');
     let auth_token = core.getInput('token');
     let package_name = core.getInput('package');
     let pattern = core.getInput('pattern');
